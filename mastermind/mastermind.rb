@@ -1,61 +1,30 @@
-# how to check if the users input matches the secret code
-setter_code = ["red", "blue", "red", "green"]
-player_guess = ["blue", "red", "red", "green"]
-  if setter_code == player_guess
-    player_win
-  end
-#would return false, they have to be in same order.
+class Player
+  attr_reader :name
+  attr_accessor :setter_code, :guesses
 
-def player_win
-  print "You have guessed the correct code! \n#{setter_code.join(" ")}"
+  def initialize
+    guesser_setup
+    setter_setup
+  end
+
+  def guesser_setup
+    puts 'What is your name?'
+    @name = gets.chomp.capitalize
+    @guesses = 1
+  end
+
+  def setter_setup
+    puts "\n#{@name} the computer is going to set the code you need to guess."
+    puts 'The computer will choose 4 out of a selection of 5 colors.'
+    puts 'The color options are - red, blue, orange, green and yellow.'
+    puts 'An O represents a color in the right place. An o represents a correct color in the wrong place.'
+    @color_options = %w[red blue orange green yellow red blue orange green yellow].shuffle
+    @setter_code = @color_options.sample(4)
+    puts @setter_code
+  end
 end
 
-# ORIGINAL ATTEMPT NOW REDUNDANT FOR BELOW METHOD
-# semi-working code to check whether any, but not all colors match in position and in color.
-# code = ["red", "blue", "red", "green"]
-# guess = ["blue", "red", "red", "green"]
-# result = []
-#  code.each_with_index do |color, i|
-#    guess.each_with_index do |user_color, n|
-#      if i == n && color == user_color
-#          result << user_color
-#
-#      else
-#        puts "no correct guesses"
-#      end
-#      puts "#{result.length} correct colors in correct positions."
-#    end
-#  end
-
-# best solution for checking if color and position is correct.
-# and then checks to see if remaining colors are included in the code but in wrong position.
-# "O" signifies correct position and color. "o" signifies correct color in wrong position.
-#setter_code = ["red", "blue", "red", "green"]
-#player_guess = ["red", "blue", "blue", "green"]
-#result = []
-#
-#  setter_code.each_with_index do |color, i|
-#      if color == player_guess[i]
-#          result << "O"
-#          setter_code[i] = "?"
-#          player_guess[i] = "!"
-#      end
-#    end
-#
-#    player_guess.each do |user_color|
-#      if setter_code.include? user_color
-#        result << "o"
-#      end
-#    end
-
-
-
-# shuffle colors available
-color_options = ["red", "blue", "orange", "green", "yellow"].shuffle
-# picks 4 of the shuffled colors and sets as the code
-setter_code = color_options.sample(4)
-
-# NEW BEST METHOD
+# Logic
 setter_code = ["red", "red", "blue", "red"]
 player_guess = ["red", "purple", "red", "orange"]
 result = []
